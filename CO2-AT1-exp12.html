@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Registration Form</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f2f4f7;
+}
+
+.container{
+    width:400px;
+    margin:40px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+    color:#0066cc;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-top:12px;
+    font-weight:bold;
+}
+
+input, select, textarea{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:15px;
+}
+
+textarea{
+    resize:none;
+}
+
+.gender{
+    margin-top:8px;
+}
+
+.gender input{
+    width:auto;
+    margin-right:5px;
+}
+
+.buttons{
+    margin-top:20px;
+}
+
+button{
+    width:48%;
+    padding:10px;
+    border:none;
+    border-radius:5px;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.submit{
+    background:#0066cc;
+}
+
+.reset{
+    background:#ff4d4d;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+.error{
+    color:red;
+    font-size:14px;
+    margin-top:10px;
+}
+
+.success{
+    color:green;
+    font-size:16px;
+    margin-top:15px;
+    text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Student Registration Form</h2>
+
+<form id="studentForm">
+
+<label>Full Name</label>
+<input type="text" id="name">
+
+<label>Register Number</label>
+<input type="text" id="regno">
+
+<label>Email</label>
+<input type="text" id="email">
+
+<label>Phone Number</label>
+<input type="text" id="phone">
+
+<label>Department</label>
+<select id="dept">
+<option value="">--Select Department--</option>
+<option>Information Technology</option>
+<option>Computer Science</option>
+<option>Artificial Intelligence</option>
+<option>Electronics</option>
+<option>Mechanical</option>
+</select>
+
+<label>Gender</label>
+
+<div class="gender">
+<input type="radio" name="gender" value="Male"> Male
+<input type="radio" name="gender" value="Female"> Female
+</div>
+
+<label>Address</label>
+<textarea id="address" rows="4"></textarea>
+
+<div class="buttons">
+<button type="submit" class="submit">Register</button>
+<button type="reset" class="reset">Reset</button>
+</div>
+
+<p id="message"></p>
+
+</form>
+
+</div>
+
+<script>
+
+document.getElementById("studentForm").addEventListener("submit", function(event){
+
+event.preventDefault();
+
+let name=document.getElementById("name").value.trim();
+let regno=document.getElementById("regno").value.trim();
+let email=document.getElementById("email").value.trim();
+let phone=document.getElementById("phone").value.trim();
+let dept=document.getElementById("dept").value;
+let address=document.getElementById("address").value.trim();
+
+let gender=document.querySelector('input[name="gender"]:checked');
+
+let message=document.getElementById("message");
+
+let namePattern=/^[A-Za-z ]+$/;
+let regPattern=/^[0-9]{9}$/;
+let emailPattern=/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+let phonePattern=/^[0-9]{10}$/;
+
+if(name==""){
+message.innerHTML="Name is required.";
+message.className="error";
+return;
+}
+
+if(!namePattern.test(name)){
+message.innerHTML="Enter a valid name.";
+message.className="error";
+return;
+}
+
+if(!regPattern.test(regno)){
+message.innerHTML="Register Number must contain 9 digits.";
+message.className="error";
+return;
+}
+
+if(!emailPattern.test(email)){
+message.innerHTML="Enter a valid email address.";
+message.className="error";
+return;
+}
+
+if(!phonePattern.test(phone)){
+message.innerHTML="Phone Number must contain 10 digits.";
+message.className="error";
+return;
+}
+
+if(dept==""){
+message.innerHTML="Select your department.";
+message.className="error";
+return;
+}
+
+if(gender==null){
+message.innerHTML="Select your gender.";
+message.className="error";
+return;
+}
+
+if(address==""){
+message.innerHTML="Address is required.";
+message.className="error";
+return;
+}
+
+message.innerHTML="Student Registration Successful!";
+message.className="success";
+
+});
+
+</script>
+
+</body>
+</html>

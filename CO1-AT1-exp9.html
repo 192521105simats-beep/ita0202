@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Observing Internet Protocols Using Browser Developer Tools</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:linear-gradient(to right,#dbeafe,#f0f9ff);
+}
+
+.container{
+    width:85%;
+    margin:30px auto;
+    background:#ffffff;
+    border-radius:12px;
+    padding:30px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+    text-align:center;
+}
+
+h1{
+    color:#0f172a;
+    margin-bottom:15px;
+}
+
+p{
+    color:#555;
+    font-size:18px;
+    margin-bottom:20px;
+}
+
+img{
+    width:400px;
+    height:250px;
+    border-radius:10px;
+    border:4px solid #2563eb;
+    box-shadow:0 0 10px rgba(0,0,0,0.3);
+    transition:0.3s;
+}
+
+img:hover{
+    transform:scale(1.05);
+}
+
+a{
+    display:inline-block;
+    margin-top:25px;
+    margin-bottom:25px;
+    padding:12px 25px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+    font-size:18px;
+    transition:0.3s;
+}
+
+a:hover{
+    background:#1d4ed8;
+}
+
+iframe{
+    width:100%;
+    max-width:800px;
+    height:450px;
+    border:4px solid #2563eb;
+    border-radius:10px;
+}
+
+footer{
+    margin-top:25px;
+    color:#666;
+    font-size:16px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Observing Internet Protocols Using Browser Developer Tools</h1>
+
+<p>
+This webpage is created to observe network requests using the
+Browser Developer Tools (Network Tab). Reload the page and inspect
+the requests for HTML, image, hyperlink, and iframe resources.
+</p>
+
+<h2>Sample Image</h2>
+<br>
+
+<img src="network.jpg" alt="Network Image">
+
+<br><br>
+
+<h2>Hyperlink</h2>
+<br>
+
+<a href="https://www.google.com" target="_blank">
+Visit Google
+</a>
+
+<br>
+
+<h2>Embedded Webpage</h2>
+<br>
+
+<iframe
+src="https://www.wikipedia.org"
+title="Wikipedia">
+</iframe>
+
+<footer>
+<p>Web Technology Laboratory Experiment</p>
+</footer>
+
+</div>
+
+<script>
+console.log("Page Loaded Successfully");
+</script>
+
+</body>
+</html>

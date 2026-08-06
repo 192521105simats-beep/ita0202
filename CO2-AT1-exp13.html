@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scientific Calculator</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    background:#f2f2f2;
+}
+
+.calculator{
+    width:360px;
+    background:#222;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+input{
+    width:100%;
+    height:60px;
+    margin-bottom:15px;
+    font-size:25px;
+    text-align:right;
+    padding:10px;
+    border:none;
+    border-radius:5px;
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+button{
+    padding:18px;
+    font-size:18px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    background:#444;
+    color:white;
+}
+
+button:hover{
+    background:#666;
+}
+
+.operator{
+    background:#ff9500;
+}
+
+.operator:hover{
+    background:#e68900;
+}
+
+.equal{
+    background:#28a745;
+}
+
+.equal:hover{
+    background:#218838;
+}
+
+.clear{
+    background:#dc3545;
+}
+
+.clear:hover{
+    background:#c82333;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="calculator">
+
+<input type="text" id="display" readonly>
+
+<div class="buttons">
+
+<button class="clear" onclick="clearDisplay()">C</button>
+<button onclick="deleteLast()">⌫</button>
+<button onclick="append('%')">%</button>
+<button class="operator" onclick="append('/')">/</button>
+
+<button onclick="append('7')">7</button>
+<button onclick="append('8')">8</button>
+<button onclick="append('9')">9</button>
+<button class="operator" onclick="append('*')">*</button>
+
+<button onclick="append('4')">4</button>
+<button onclick="append('5')">5</button>
+<button onclick="append('6')">6</button>
+<button class="operator" onclick="append('-')">-</button>
+
+<button onclick="append('1')">1</button>
+<button onclick="append('2')">2</button>
+<button onclick="append('3')">3</button>
+<button class="operator" onclick="append('+')">+</button>
+
+<button onclick="append('0')">0</button>
+<button onclick="append('.')">.</button>
+<button class="equal" onclick="calculate()">=</button>
+<button onclick="square()">x²</button>
+
+<button onclick="sqrt()">√</button>
+<button onclick="sin()">sin</button>
+<button onclick="cos()">cos</button>
+<button onclick="tan()">tan</button>
+
+<button onclick="log()">log</button>
+<button onclick="ln()">ln</button>
+<button onclick="power()">xʸ</button>
+<button onclick="pi()">π</button>
+
+</div>
+
+</div>
+
+<script>
+
+let display=document.getElementById("display");
+
+function append(value){
+    display.value+=value;
+}
+
+function clearDisplay(){
+    display.value="";
+}
+
+function deleteLast(){
+    display.value=display.value.slice(0,-1);
+}
+
+function calculate(){
+    try{
+        display.value=eval(display.value);
+    }
+    catch{
+        display.value="Error";
+    }
+}
+
+function square(){
+    display.value=Math.pow(Number(display.value),2);
+}
+
+function sqrt(){
+    display.value=Math.sqrt(Number(display.value));
+}
+
+function sin(){
+    display.value=Math.sin(Number(display.value)*Math.PI/180);
+}
+
+function cos(){
+    display.value=Math.cos(Number(display.value)*Math.PI/180);
+}
+
+function tan(){
+    display.value=Math.tan(Number(display.value)*Math.PI/180);
+}
+
+function log(){
+    display.value=Math.log10(Number(display.value));
+}
+
+function ln(){
+    display.value=Math.log(Number(display.value));
+}
+
+function power(){
+    let exponent=prompt("Enter Power:");
+    display.value=Math.pow(Number(display.value),Number(exponent));
+}
+
+function pi(){
+    display.value=Math.PI;
+}
+
+</script>
+
+</body>
+</html>

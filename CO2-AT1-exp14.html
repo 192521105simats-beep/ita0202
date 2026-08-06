@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Result Analysis System</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f2f2f2;
+}
+
+.container{
+    width:650px;
+    margin:30px auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+    color:#0066cc;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-top:12px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    margin-top:20px;
+    padding:10px 20px;
+    background:#0066cc;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#004a99;
+}
+
+table{
+    width:100%;
+    margin-top:25px;
+    border-collapse:collapse;
+}
+
+table,th,td{
+    border:1px solid black;
+}
+
+th{
+    background:#0066cc;
+    color:white;
+}
+
+th,td{
+    padding:10px;
+    text-align:center;
+}
+
+.result{
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>Student Result Analysis System</h2>
+
+<label>Student Name</label>
+<input type="text" id="name">
+
+<label>Register Number</label>
+<input type="text" id="regno">
+
+<label>HTML Marks</label>
+<input type="number" id="m1">
+
+<label>CSS Marks</label>
+<input type="number" id="m2">
+
+<label>JavaScript Marks</label>
+<input type="number" id="m3">
+
+<label>Database Marks</label>
+<input type="number" id="m4">
+
+<label>Python Marks</label>
+<input type="number" id="m5">
+
+<button onclick="analyzeResult()">Analyze Result</button>
+
+<table id="resultTable" style="display:none;">
+<tr>
+<th>Name</th>
+<th>Reg No</th>
+<th>Total</th>
+<th>Average</th>
+<th>Highest</th>
+<th>Lowest</th>
+<th>Grade</th>
+<th>Result</th>
+</tr>
+
+<tr id="outputRow"></tr>
+
+</table>
+
+<div class="result" id="summary"></div>
+
+</div>
+
+<script>
+
+function analyzeResult(){
+
+let student={
+name:document.getElementById("name").value,
+regno:document.getElementById("regno").value
+};
+
+let marks=[
+Number(document.getElementById("m1").value),
+Number(document.getElementById("m2").value),
+Number(document.getElementById("m3").value),
+Number(document.getElementById("m4").value),
+Number(document.getElementById("m5").value)
+];
+
+for(let i=0;i<marks.length;i++){
+    if(marks[i]<0 || marks[i]>100){
+        alert("Marks should be between 0 and 100");
+        return;
+    }
+}
+
+let total=0;
+
+for(let i=0;i<marks.length;i++){
+    total+=marks[i];
+}
+
+let average=total/marks.length;
+
+let highest=Math.max(...marks);
+let lowest=Math.min(...marks);
+
+let grade="";
+let result="Pass";
+
+if(average>=90)
+grade="A+";
+else if(average>=80)
+grade="A";
+else if(average>=70)
+grade="B";
+else if(average>=60)
+grade="C";
+else if(average>=50)
+grade="D";
+else{
+grade="F";
+result="Fail";
+}
+
+for(let i=0;i<marks.length;i++){
+    if(marks[i]<35){
+        result="Fail";
+    }
+}
+
+document.getElementById("resultTable").style.display="table";
+
+document.getElementById("outputRow").innerHTML=
+"<td>"+student.name+"</td>"+
+"<td>"+student.regno+"</td>"+
+"<td>"+total+"</td>"+
+"<td>"+average.toFixed(2)+"</td>"+
+"<td>"+highest+"</td>"+
+"<td>"+lowest+"</td>"+
+"<td>"+grade+"</td>"+
+"<td>"+result+"</td>";
+
+document.getElementById("summary").innerHTML=
+"Highest Mark : "+highest+
+" | Lowest Mark : "+lowest+
+" | Average : "+average.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>

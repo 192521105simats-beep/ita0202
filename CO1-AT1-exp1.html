@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hari Prasad | Portfolio</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:linear-gradient(-45deg,#1d2671,#c33764,#00c6ff,#0072ff);
+    background-size:400% 400%;
+    animation:bg 12s ease infinite;
+    color:white;
+}
+
+@keyframes bg{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* Navigation */
+
+nav{
+    position:fixed;
+    width:100%;
+    top:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 10%;
+    background:rgba(0,0,0,.25);
+    backdrop-filter:blur(12px);
+    z-index:1000;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#FFD700;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+}
+
+nav ul li{
+    margin-left:30px;
+}
+
+nav ul li a{
+    text-decoration:none;
+    color:white;
+    font-weight:bold;
+    transition:.3s;
+}
+
+nav ul li a:hover{
+    color:#FFD700;
+}
+
+/* Hero */
+
+.hero{
+    height:100vh;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    padding:100px 10%;
+}
+
+.hero-text h1{
+    font-size:60px;
+}
+
+.hero-text h2{
+    margin:15px 0;
+    color:#FFD700;
+}
+
+.hero-text p{
+    max-width:500px;
+    line-height:1.8;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:14px 30px;
+    background:#FFD700;
+    color:black;
+    text-decoration:none;
+    border-radius:30px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:scale(1.08);
+}
+
+.hero img{
+    width:320px;
+    height:320px;
+    border-radius:50%;
+    border:6px solid white;
+    object-fit:cover;
+    box-shadow:0 0 35px rgba(255,255,255,.6);
+    animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+    50%{
+        transform:translateY(-15px);
+    }
+}
+
+/* Sections */
+
+section{
+    padding:80px 10%;
+}
+
+.title{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:40px;
+    color:#FFD700;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:30px;
+    text-align:center;
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    background:rgba(255,255,255,.22);
+}
+
+.card i{
+    font-size:50px;
+    color:#FFD700;
+    margin-bottom:20px;
+}
+
+/* Skills */
+
+.skills{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.skill{
+    background:rgba(255,255,255,.15);
+    padding:20px;
+    border-radius:15px;
+}
+
+.progress{
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.progress div{
+    height:12px;
+    background:#FFD700;
+}
+
+/* Contact */
+
+.contact{
+    text-align:center;
+}
+
+.contact i{
+    font-size:35px;
+    margin:15px;
+    transition:.3s;
+    cursor:pointer;
+}
+
+.contact i:hover{
+    color:#FFD700;
+    transform:scale(1.2);
+}
+
+footer{
+    padding:25px;
+    text-align:center;
+    background:rgba(0,0,0,.3);
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="logo">Hari Prasad</div>
+
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+
+</nav>
+
+<section class="hero" id="home">
+
+<div class="hero-text">
+
+<h1>Hello!</h1>
+
+<h2>I'm Hari Prasad</h2>
+
+<p>
+A passionate Web Developer and Machine Learning student.
+I enjoy building modern websites and intelligent applications.
+</p>
+
+<a href="#contact" class="btn">Hire Me</a>
+
+</div>
+
+<img src="profile.jpg" alt="Profile">
+
+</section>
+
+<section id="about">
+
+<h2 class="title">About Me</h2>
+
+<div class="cards">
+
+<div class="card">
+<i class="fa-solid fa-user"></i>
+<h3>Student</h3>
+<p>Learning Web Technology, Python and Machine Learning.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-code"></i>
+<h3>Developer</h3>
+<p>Creating responsive websites using HTML, CSS and JavaScript.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-lightbulb"></i>
+<h3>Creative</h3>
+<p>Always exploring new technologies and innovative ideas.</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="skills">
+
+<h2 class="title">Skills</h2>
+
+<div class="skills">
+
+<div class="skill">
+HTML
+<div class="progress"><div style="width:95%"></div></div>
+</div>
+
+<div class="skill">
+CSS
+<div class="progress"><div style="width:90%"></div></div>
+</div>
+
+<div class="skill">
+JavaScript
+<div class="progress"><div style="width:80%"></div></div>
+</div>
+
+<div class="skill">
+Python
+<div class="progress"><div style="width:90%"></div></div>
+</div>
+
+</div>
+
+</section>
+
+<section id="services">
+
+<h2 class="title">Services</h2>
+
+<div class="cards">
+
+<div class="card">
+<i class="fa-solid fa-laptop-code"></i>
+<h3>Web Design</h3>
+<p>Beautiful and responsive websites.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-mobile-screen-button"></i>
+<h3>Responsive UI</h3>
+<p>Works perfectly on desktop and mobile.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-brain"></i>
+<h3>Machine Learning</h3>
+<p>AI and ML project development.</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="contact">
+
+<h2 class="title">Contact Me</h2>
+
+<div class="contact">
+
+<p>Email: hariprasad@gmail.com</p>
+
+<p>Phone: +91 9876543210</p>
+
+<i class="fab fa-github"></i>
+<i class="fab fa-linkedin"></i>
+<i class="fab fa-instagram"></i>
+<i class="fab fa-facebook"></i>
+
+</div>
+
+</section>
+
+<footer>
+© 2026 Hari Prasad | Premium Portfolio Website
+</footer>
+
+</body>
+</html>

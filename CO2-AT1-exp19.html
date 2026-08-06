@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart and Billing System</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input {
+            width: 30%;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        .delete {
+            background: #e74c3c;
+        }
+
+        .bill {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+
+        .bill p {
+            font-size: 18px;
+        }
+
+        .total {
+            font-size: 22px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Shopping Cart</h1>
+
+    <div class="form">
+        <input type="text" id="product" placeholder="Product name">
+        <input type="number" id="price" placeholder="Price">
+        <input type="number" id="quantity" placeholder="Quantity" min="1">
+        <button onclick="addProduct()">Add</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody id="cart"></tbody>
+    </table>
+
+    <div class="bill">
+        <p>Subtotal: ₹<span id="subtotal">0</span></p>
+        <p>Discount (10%): ₹<span id="discount">0</span></p>
+        <p>Tax (18%): ₹<span id="tax">0</span></p>
+        <p class="total">Total: ₹<span id="total">0</span></p>
+    </div>
+
+</div>
+
+<script>
+
+    let products = [];
+
+    function addProduct() {
+
+        let name = document.getElementById("product").value;
+        let price = Number(document.getElementById("price").value);
+        let quantity = Number(document.getElementById("quantity").value);
+
+        if (name === "" || price <= 0 || quantity <= 0) {
+            alert("Please enter valid product details");
+            return;
+        }
+
+        let product = {
+            name: name,
+            price: price,
+            quantity: quantity
+        };
+
+        products.push(product);
+
+        displayCart();
+
+        document.getElementById("product").value = "";
+        document.getElementById("price").value = "";
+        document.getElementById("quantity").value = "";
+    }
+
+    function displayCart() {
+
+        let cart = document.getElementById("cart");
+
+        cart.innerHTML = "";
+
+        let subtotal = 0;
+
+        products.forEach(function(product, index) {
+
+            let amount = product.price * product.quantity;
+
+            subtotal += amount;
+
+            cart.innerHTML += `
+                <tr>
+                    <td>${product.name}</td>
+                    <td>₹${product.price}</td>
+                    <td>${product.quantity}</td>
+                    <td>₹${amount}</td>
+                    <td>
+                        <button class="delete"
+                        onclick="deleteProduct(${index})">
+                        Delete
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        calculateBill(subtotal);
+    }
+
+    function deleteProduct(index) {
+
+        products.splice(index, 1);
+
+        displayCart();
+    }
+
+    function calculateBill(subtotal) {
+
+        let discount = subtotal * 0.10;
+
+        let taxableAmount = subtotal - discount;
+
+        let tax = taxableAmount * 0.18;
+
+        let total = taxableAmount + tax;
+
+        document.getElementById("subtotal").textContent =
+            subtotal.toFixed(2);
+
+        document.getElementById("discount").textContent =
+            discount.toFixed(2);
+
+        document.getElementById("tax").textContent =
+            tax.toFixed(2);
+
+        document.getElementById("total").textContent =
+            total.toFixed(2);
+    }
+
+</script>
+
+</body>
+</html>

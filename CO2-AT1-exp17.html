@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Quiz Application</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #667eea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .quiz-card {
+            background: white;
+            width: 500px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #question {
+            margin: 20px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .option {
+            display: block;
+            background: #f2f2f2;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #ddd;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background: #4f63c4;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="quiz-card">
+
+        <h1>Online Quiz</h1>
+
+        <div id="question"></div>
+
+        <div id="options"></div>
+
+        <button onclick="nextQuestion()">Next</button>
+
+        <div id="result"></div>
+
+    </div>
+
+    <script>
+
+        let questions = [
+            {
+                question: "Which language is used to create web pages?",
+                options: ["Python", "HTML", "Java", "C++"],
+                answer: "HTML"
+            },
+            {
+                question: "Which language is used for web page styling?",
+                options: ["CSS", "Python", "C", "Java"],
+                answer: "CSS"
+            },
+            {
+                question: "Which language is used to make web pages interactive?",
+                options: ["HTML", "CSS", "JavaScript", "SQL"],
+                answer: "JavaScript"
+            },
+            {
+                question: "Which keyword is used to declare a variable in JavaScript?",
+                options: ["var", "int", "string", "define"],
+                answer: "var"
+            },
+            {
+                question: "Which symbol is used for comments in JavaScript?",
+                options: ["//", "##", "<!--", "**"],
+                answer: "//"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function displayQuestion() {
+
+            let q = questions[currentQuestion];
+
+            document.getElementById("question").textContent =
+                (currentQuestion + 1) + ". " + q.question;
+
+            let optionsDiv = document.getElementById("options");
+
+            optionsDiv.innerHTML = "";
+
+            q.options.forEach(function(option) {
+
+                let label = document.createElement("label");
+
+                label.className = "option";
+
+                label.innerHTML =
+                    '<input type="radio" name="answer" value="' +
+                    option + '"> ' + option;
+
+                optionsDiv.appendChild(label);
+            });
+        }
+
+        function nextQuestion() {
+
+            let selected = document.querySelector(
+                'input[name="answer"]:checked'
+            );
+
+            if (!selected) {
+                alert("Please select an answer");
+                return;
+            }
+
+            if (selected.value === questions[currentQuestion].answer) {
+                score++;
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                displayQuestion();
+            } else {
+                document.getElementById("question").textContent =
+                    "Quiz Completed!";
+
+                document.getElementById("options").innerHTML = "";
+
+                document.querySelector("button").style.display = "none";
+
+                document.getElementById("result").textContent =
+                    "Your Score: " + score + " / " + questions.length;
+            }
+        }
+
+        displayQuestion();
+
+    </script>
+
+</body>
+</html>

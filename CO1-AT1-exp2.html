@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional Student Profile</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI, sans-serif;
+}
+hobby-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+    margin-top:25px;
+}
+skills-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+    margin-top:25px;
+}
+
+.tech-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:25px;
+    margin-top:25px;
+}
+
+.tech-box{
+    background:#00ffd5;
+    color:#111;
+    padding:25px;
+    text-align:center;
+    border-radius:15px;
+    transition:.4s;
+}
+
+.tech-box:hover{
+    transform:rotate(-3deg) scale(1.05);
+    background:white;
+}
+
+.tech-icon{
+    font-size:50px;
+    margin-bottom:10px;
+}
+.marks-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-top:25px;
+}
+
+.mark-card{
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(10px);
+
+    border-radius:20px;
+
+    padding:25px;
+
+    text-align:center;
+
+    transition:.4s;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
+
+.mark-card:hover{
+
+    transform:translateY(-10px);
+
+    background:#00ffd5;
+
+    color:black;
+}
+
+.mark-card h1{
+
+    font-size:50px;
+
+    margin-top:10px;
+}
+.hobby-card{
+
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+
+    border-radius:20px;
+    padding:25px;
+
+    text-align:center;
+
+    transition:0.4s;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
+
+.hobby-card:hover{
+
+    transform:translateY(-12px) scale(1.05);
+
+    background:#00ffd5;
+
+    color:#111;
+
+    cursor:pointer;
+}
+
+.icon{
+
+    width:80px;
+    height:80px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:40px;
+
+    margin-bottom:18px;
+
+    transition:.4s;
+}
+
+.hobby-card:hover .icon{
+
+    transform:rotate(360deg);
+
+    background:#003366;
+
+    color:white;
+}
+
+.hobby-card h3{
+
+    margin-bottom:10px;
+
+    color:#00ffd5;
+}
+
+.hobby-card:hover h3{
+
+    color:#003366;
+}
+
+.hobby-card p{
+
+    font-size:15px;
+
+    line-height:24px;
+}
+.business-card{
+
+    width:400px;
+
+    margin:auto;
+
+    background:linear-gradient(135deg,#00ffd5,#00b894);
+
+    color:black;
+
+    text-align:center;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:0 10px 20px rgba(0,0,0,.3);
+}
+
+.business-card hr{
+    margin:20px 0;
+}
+body{
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+}
+
+
+/* Navigation */
+
+nav{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    padding:18px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+    position:sticky;
+    top:0;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#00ffd5;
+}
+
+/* Main Card */
+
+.container{
+    width:85%;
+    max-width:1000px;
+    margin:40px auto;
+    background:rgba(255,255,255,.1);
+    backdrop-filter:blur(15px);
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+/* Image */
+
+.profile{
+    text-align:center;
+}
+
+.profile img{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    border:5px solid white;
+    object-fit:cover;
+}
+
+.profile h1{
+    margin-top:15px;
+    font-size:40px;
+}
+
+.profile p{
+    margin-top:10px;
+    font-size:18px;
+}
+
+/* Sections */
+
+section{
+    margin-top:40px;
+}
+
+h2{
+    color:#00ffd5;
+    margin-bottom:15px;
+}
+
+/* Lists */
+
+ul li,ol li{
+    margin:8px 0;
+}
+
+/* Table */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#00ffd5;
+    color:black;
+}
+
+th,td{
+    border:1px solid white;
+    padding:12px;
+    text-align:center;
+}
+
+/* Skills */
+
+.skill{
+    margin:15px 0;
+}
+
+.bar{
+    background:#555;
+    border-radius:20px;
+}
+
+.fill{
+    background:#00ffd5;
+    color:black;
+    text-align:right;
+    padding:5px;
+    border-radius:20px;
+}
+
+/* Contact */
+
+.contact{
+    background:rgba(255,255,255,.08);
+    padding:20px;
+    border-radius:15px;
+}
+
+/* Button */
+
+button{
+    margin-top:15px;
+    padding:12px 25px;
+    background:#00ffd5;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:white;
+}
+
+/* Footer */
+
+footer{
+    text-align:center;
+    padding:20px;
+    margin-top:30px;
+    background:rgba(255,255,255,.08);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#about">About</a>
+<a href="#skills">Skills</a>
+<a href="#marks">Marks</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<div class="container">
+
+<div class="profile" id="home">
+
+<img src="Photos/hari.jpg" alt="Profile">
+
+<h1>Hariprasad</h1>
+
+<p>Information Technology Student | Web Developer | Python Programmer</p>
+
+</div>
+
+<section id="about">
+
+<h2>About Me</h2>
+
+<p>
+I am Hariprasad, an enthusiastic Information Technology student with a strong interest in software development. I have knowledge of HTML, CSS, Python, Java, and Machine Learning. I enjoy creating user-friendly web applications and continuously improving my technical skills. My ambition is to build innovative software solutions and grow as a professional developer.
+</p>
+
+<br>
+
+<h2>Hobbies</h2>
+
+<div class="hobby-container">
+
+    <div class="hobby-card">
+        <div class="icon">💻</div>
+        <h3>Programming</h3>
+        <p>Building websites, solving coding problems and learning new technologies.</p>
+    </div>
+
+    <div class="hobby-card">
+        <div class="icon">🏏</div>
+        <h3>Cricket</h3>
+        <p>Playing cricket to improve teamwork, fitness and concentration.</p>
+    </div>
+
+    <div class="hobby-card">
+        <div class="icon">🎵</div>
+        <h3>Music</h3>
+        <p>Listening to music to stay relaxed, refreshed and motivated.</p>
+    </div>
+
+    <div class="hobby-card">
+        <div class="icon">📚</div>
+        <h3>Reading</h3>
+        <p>Reading technology articles and programming books every week.</p>
+    </div>
+
+</div>
+<section id="skills">
+
+<h2>Technical Skills</h2>
+
+<div class="tech-container">
+
+    <div class="tech-box">
+        <div class="tech-icon">🌐</div>
+        <h3>HTML</h3>
+    </div>
+
+    <div class="tech-box">
+        <div class="tech-icon">🎨</div>
+        <h3>CSS</h3>
+    </div>
+
+    <div class="tech-box">
+        <div class="tech-icon">🐍</div>
+        <h3>Python</h3>
+    </div>
+
+    <div class="tech-box">
+        <div class="tech-icon">☕</div>
+        <h3>Java</h3>
+    </div>
+
+</div>
+
+</section>
+
+<section id="marks">
+
+<h2>Subject Marks</h2>
+
+<div class="marks-container">
+
+<div class="mark-card">
+<h3>🌐 Web Technology</h3>
+<h1>92</h1>
+</div>
+
+<div class="mark-card">
+<h3>🐍 Python</h3>
+<h1>95</h1>
+</div>
+
+<div class="mark-card">
+<h3>☕ Java</h3>
+<h1>89</h1>
+</div>
+
+<div class="mark-card">
+<h3>🤖 Machine Learning</h3>
+<h1>91</h1>
+</div>
+
+</div>
+
+</section>
+
+<section id="contact">
+
+<section id="contact">
+
+<section id="contact">
+
+<h2>Contact Details</h2>
+
+<div class="business-card">
+
+<h1>Hariprasad</h1>
+
+<p>💻 Information Technology Student</p>
+
+<hr>
+
+<p>📧 hariprasad@gmail.com</p>
+
+<p>📱 +91 7397353895</p>
+
+<p>📍 Chennai, Tamil Nadu</p>
+
+<br>
+
+<button onclick="window.open('https://simatsengineering.com/')">
+College Website
+</button>
+
+</div>
+
+</section>
+
+</div>
+
+<footer>
+
+<h3>© 2026 Hariprasad | Student Profile</h3>
+
+</footer>
+
+</body>
+</html>
