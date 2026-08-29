@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Course Enrollment Analysis</title>
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #eef2f7;
+            color: #1a2639;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER ===== */
+        .main-header {
+            background: linear-gradient(135deg, #0b2a4a 0%, #1a4a7a 100%);
+            color: #fff;
+            padding: 30px 20px 25px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(11, 42, 74, 0.3);
+        }
+
+        .main-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .main-header h1 span {
+            color: #7cb9e8;
+        }
+
+        .main-header p {
+            font-size: 1rem;
+            opacity: 0.85;
+            font-weight: 300;
+            margin-top: 5px;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav-container {
+            background: #fff;
+            padding: 12px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-scroll {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 4px 0;
+            scrollbar-width: thin;
+        }
+
+        .nav-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .nav-scroll::-webkit-scrollbar-thumb {
+            background: #1a4a7a;
+            border-radius: 10px;
+        }
+
+        .nav-btn {
+            flex: 0 0 auto;
+            padding: 10px 22px;
+            border: none;
+            background: transparent;
+            color: #4a5b6e;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            background: #e8f0fe;
+            color: #0b2a4a;
+        }
+
+        .nav-btn.active {
+            background: #0b2a4a;
+            color: #fff;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 1200px;
+            margin: 25px auto;
+            padding: 0 20px 30px;
+        }
+
+        /* ===== SCREENS ===== */
+        .screen {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .screen-title {
+            font-size: 1.6rem;
+            color: #0b2a4a;
+            margin-bottom: 22px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .screen-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, #1a4a7a, transparent);
+        }
+
+        /* ===== STATS CARDS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: #fff;
+            padding: 22px 15px 18px;
+            text-align: center;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            border-bottom: 5px solid #1a4a7a;
+            transition: transform 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .stat-card .icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .stat-card .number {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #0b2a4a;
+            line-height: 1.2;
+        }
+
+        .stat-card .label {
+            font-size: 0.95rem;
+            color: #4a5b6e;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* ===== PANELS ===== */
+        .panel {
+            background: #fff;
+            padding: 24px 28px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+        }
+
+        .panel h3 {
+            color: #0b2a4a;
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        .panel p {
+            color: #2a3a4e;
+            line-height: 1.7;
+            font-size: 0.98rem;
+        }
+
+        .panel p strong {
+            color: #0b2a4a;
+        }
+
+        /* ===== TABLE ===== */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        thead {
+            background: #0b2a4a;
+            color: #fff;
+        }
+
+        thead th {
+            padding: 14px 12px;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #eef2f7;
+            transition: background 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background: #e8f0fe;
+        }
+
+        tbody td {
+            padding: 12px 12px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* ===== BADGES ===== */
+        .badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-theory {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge-practical {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .badge-lab {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .high-enrollment {
+            font-weight: 700;
+            color: #b91c1c;
+            font-size: 1.05rem;
+        }
+
+        /* ===== CHART ===== */
+        .chart-container {
+            background: #fff;
+            padding: 28px 32px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .chart-row {
+            margin-bottom: 20px;
+        }
+
+        .chart-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .chart-label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+            color: #0b2a4a;
+        }
+
+        .chart-label .code {
+            color: #4a5b6e;
+            font-weight: 400;
+        }
+
+        .chart-bar-bg {
+            height: 34px;
+            background: #eef2f7;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-bar-fill {
+            height: 100%;
+            border-radius: 30px;
+            background: linear-gradient(90deg, #1a4a7a, #4a8fd8);
+            transition: width 0.8s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 14px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            min-width: 40px;
+        }
+
+        /* ===== FACULTY GRID ===== */
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .faculty-card {
+            background: #fff;
+            padding: 22px 24px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            border-left: 6px solid #1a4a7a;
+        }
+
+        .faculty-card h3 {
+            color: #0b2a4a;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .faculty-card .course-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eef2f7;
+            font-size: 0.92rem;
+        }
+
+        .faculty-card .course-item:last-child {
+            border-bottom: none;
+        }
+
+        .faculty-card .course-item .students {
+            font-weight: 700;
+            color: #0b2a4a;
+        }
+
+        .faculty-card .total {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #eef2f7;
+            font-weight: 700;
+            color: #0b2a4a;
+        }
+
+        /* ===== CREDIT GRID ===== */
+        .credit-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .credit-card {
+            background: #fff;
+            padding: 24px 28px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .credit-card h3 {
+            color: #0b2a4a;
+            font-size: 1.15rem;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .credit-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .credit-item:last-child {
+            border-bottom: none;
+        }
+
+        .credit-item .name {
+            font-weight: 500;
+        }
+
+        .credit-item .value {
+            font-weight: 700;
+            color: #0b2a4a;
+        }
+
+        .total-credits {
+            margin-top: 20px;
+            padding: 22px;
+            background: #f0f5fe;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #0b2a4a;
+        }
+
+        .total-credits small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #4a5b6e;
+        }
+
+        /* ===== ANALYSIS GRID ===== */
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .analysis-card {
+            background: #fff;
+            padding: 22px 24px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .analysis-card h3 {
+            color: #0b2a4a;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .analysis-card p {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #0b2a4a;
+        }
+
+        .analysis-card p .highlight {
+            background: #dbeafe;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #1a4a7a;
+        }
+
+        /* ===== FOOTER ===== */
+        .main-footer {
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            text-align: center;
+            padding: 16px 20px;
+            color: #4a5b6e;
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .main-footer span {
+            font-weight: 500;
+            color: #0b2a4a;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .credit-grid {
+                grid-template-columns: 1fr;
+            }
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .main-header h1 {
+                font-size: 1.4rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .stat-card .number {
+                font-size: 2rem;
+            }
+            .stat-card {
+                padding: 16px 10px;
+            }
+            .nav-btn {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+            }
+            .screen-title {
+                font-size: 1.2rem;
+            }
+            .chart-container {
+                padding: 16px;
+            }
+            .panel {
+                padding: 18px;
+            }
+            .analysis-card {
+                padding: 16px 18px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="main-header">
+        <h1>🎓 University <span>Course Enrollment</span> Analysis</h1>
+        <p>Web Technology — Unit IV · XML · XPath · XSLT</p>
+    </header>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="nav-container">
+        <div class="nav-scroll">
+            <button class="nav-btn active" data-screen="overview">📊 Overview</button>
+            <button class="nav-btn" data-screen="courses">📋 All Courses</button>
+            <button class="nav-btn" data-screen="chart">📈 Enrollment Chart</button>
+            <button class="nav-btn" data-screen="faculty">👨‍🏫 Faculty</button>
+            <button class="nav-btn" data-screen="credits">🎯 Credits</button>
+            <button class="nav-btn" data-screen="analysis">📝 Analysis</button>
+        </div>
+    </nav>
+
+    <!-- ===== CONTAINER ===== -->
+    <div class="container">
+
+        <!-- ============================================================ -->
+        <!-- SCREEN 1: OVERVIEW -->
+        <!-- ============================================================ -->
+        <section id="overview" class="screen active">
+            <h2 class="screen-title">📊 Dashboard Overview</h2>
+
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <span class="icon">📚</span>
+                    <div class="number" id="totalCourses">0</div>
+                    <div class="label">Total Courses</div>
+                </div>
+                <div class="stat-card">
+                    <span class="icon">📖</span>
+                    <div class="number" id="theoryCourses">0</div>
+                    <div class="label">Theory Courses</div>
+                </div>
+                <div class="stat-card">
+                    <span class="icon">⬆️</span>
+                    <div class="number" id="highestEnrollment">0</div>
+                    <div class="label">Highest Enrollment</div>
+                </div>
+                <div class="stat-card">
+                    <span class="icon">⬇️</span>
+                    <div class="number" id="lowestEnrollment">0</div>
+                    <div class="label">Lowest Enrollment</div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>📌 Quick Summary</h3>
+                <p id="summaryText"></p>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SCREEN 2: ALL COURSES -->
+        <!-- ============================================================ -->
+        <section id="courses" class="screen">
+            <h2 class="screen-title">📋 Complete Course List</h2>
+
+            <div class="panel">
+                <p style="margin-bottom:16px;color:#4a5b6e;">
+                    All courses parsed from XML data using <strong>XPath</strong> queries.
+                </p>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
+                                <th>Faculty</th>
+                                <th>Students</th>
+                                <th>Credits</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="courseTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SCREEN 3: CHART -->
+        <!-- ============================================================ -->
+        <section id="chart" class="screen">
+            <h2 class="screen-title">📈 Enrollment Bar Chart</h2>
+
+            <div class="chart-container" id="chartContainer"></div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SCREEN 4: FACULTY -->
+        <!-- ============================================================ -->
+        <section id="faculty" class="screen">
+            <h2 class="screen-title">👨‍🏫 Faculty Analysis</h2>
+
+            <div class="faculty-grid" id="facultyGrid"></div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SCREEN 5: CREDITS -->
+        <!-- ============================================================ -->
+        <section id="credits" class="screen">
+            <h2 class="screen-title">🎯 Credit Analysis</h2>
+
+            <div class="credit-grid">
+                <div class="credit-card">
+                    <h3>📘 4-Credit Courses</h3>
+                    <div id="fourCreditCourses"></div>
+                </div>
+
+                <div class="credit-card">
+                    <h3>📗 Other Credits</h3>
+                    <div id="otherCreditCourses"></div>
+                </div>
+            </div>
+
+            <div class="total-credits">
+                <span id="totalCredits">0</span>
+                <small> total credits across all courses</small>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- SCREEN 6: ANALYSIS -->
+        <!-- ============================================================ -->
+        <section id="analysis" class="screen">
+            <h2 class="screen-title">📝 Data Interpretation</h2>
+
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>🏆 Highest Enrollment</h3>
+                    <p id="highestCourse"></p>
+                </div>
+                <div class="analysis-card">
+                    <h3>📉 Lowest Enrollment</h3>
+                    <p id="lowestCourse"></p>
+                </div>
+                <div class="analysis-card">
+                    <h3>📘 Theory Courses</h3>
+                    <p id="theoryResult"></p>
+                </div>
+                <div class="analysis-card">
+                    <h3>🎯 4-Credit Courses</h3>
+                    <p id="fourCreditResult"></p>
+                </div>
+                <div class="analysis-card">
+                    <h3>🧑‍🏫 TA Required (60+ students)</h3>
+                    <p id="supportResult"></p>
+                </div>
+                <div class="analysis-card">
+                    <h3>📊 Total Students</h3>
+                    <p id="totalStudents"></p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="main-footer">
+        <span>Web Technology</span> · <span>XML</span> · <span>XPath</span> · <span>XSLT</span> &nbsp;|&nbsp; © 2026
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================================================ -->
+    <script>
+        // ============================================================
+        // 1. XML DATA (EXACTLY AS PROVIDED)
+        // ============================================================
+        const xmlData = `
+        <courses>
+            <course id="C101">
+                <code>WEB301</code>
+                <name>Web Technology</name>
+                <faculty>Dr. Arun</faculty>
+                <students>58</students>
+                <credits>4</credits>
+                <type>Theory</type>
+            </course>
+            <course id="C102">
+                <code>AI302</code>
+                <name>Artificial Intelligence</name>
+                <faculty>Dr. Meena</faculty>
+                <students>72</students>
+                <credits>4</credits>
+                <type>Theory</type>
+            </course>
+            <course id="C103">
+                <code>WEB303</code>
+                <name>Web Technology Laboratory</name>
+                <faculty>Dr. Ravi</faculty>
+                <students>36</students>
+                <credits>2</credits>
+                <type>Practical</type>
+            </course>
+            <course id="C104">
+                <code>ML304</code>
+                <name>Machine Learning</name>
+                <faculty>Dr. Priya</faculty>
+                <students>64</students>
+                <credits>4</credits>
+                <type>Theory</type>
+            </course>
+            <course id="C105">
+                <code>DB305</code>
+                <name>Database Systems</name>
+                <faculty>Dr. Kumar</faculty>
+                <students>42</students>
+                <credits>3</credits>
+                <type>Theory</type>
+            </course>
+        </courses>
+        `;
+
+        // ============================================================
+        // 2. PARSE XML
+        // ============================================================
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlData, "application/xml");
+
+        // ============================================================
+        // 3. XPATH FUNCTION
+        // ============================================================
+        function xpathQuery(expression, contextNode) {
+            const result = xmlDoc.evaluate(
+                expression,
+                contextNode || xmlDoc,
+                null,
+                XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+                null
+            );
+            const nodes = [];
+            for (let i = 0; i < result.snapshotLength; i++) {
+                nodes.push(result.snapshotItem(i));
+            }
+            return nodes;
+        }
+
+        // ============================================================
+        // 4. EXTRACT COURSES USING XPATH
+        // ============================================================
+        const courseNodes = xpathQuery("//course");
+
+        const courses = courseNodes.map(node => ({
+            id: node.getAttribute('id'),
+            code: xpathQuery(".//code", node)[0]?.textContent || '',
+            name: xpathQuery(".//name", node)[0]?.textContent || '',
+            faculty: xpathQuery(".//faculty", node)[0]?.textContent || '',
+            students: parseInt(xpathQuery(".//students", node)[0]?.textContent || '0'),
+            credits: parseInt(xpathQuery(".//credits", node)[0]?.textContent || '0'),
+            type: xpathQuery(".//type", node)[0]?.textContent || ''
+        }));
+
+        // ============================================================
+        // 5. XPATH QUERIES FOR DEMONSTRATION (CONSOLE OUTPUT)
+        // ============================================================
+        console.log('=== XPATH QUERY RESULTS ===');
+        console.log('📚 All courses:', xpathQuery('//course').length);
+        console.log('📖 Courses > 50 students:', xpathQuery('//course[students > 50]').length);
+        console.log('🎯 4-credit courses:', xpathQuery('//course[credits = 4]').length);
+        console.log('📘 Theory courses:', xpathQuery('//course[type = "Theory"]').length);
+        console.log('🔬 Practical courses:', xpathQuery('//course[type = "Practical"]').length);
+        console.log('📋 Course C104 (ML304):', xpathQuery('//course[@id="C104"]')[0]?.querySelector('name')?.textContent);
+        console.log('👨‍🏫 Faculty with 4-credit courses:', xpathQuery('//course[credits >= 4]/faculty').map(n => n.textContent));
+        console.log('📊 First course:', xpathQuery('//course[1]')[0]?.querySelector('name')?.textContent);
+        console.log('📊 Last course:', xpathQuery('//course[last()]')[0]?.querySelector('name')?.textContent);
+
+        // ============================================================
+        // 6. CALCULATIONS
+        // ============================================================
+        const totalCourses = courses.length;
+        const theoryCourses = courses.filter(c => c.type === 'Theory');
+        const practicalCourses = courses.filter(c => c.type === 'Practical');
+        const fourCreditCourses = courses.filter(c => c.credits === 4);
+        const highEnrollment = courses.filter(c => c.students > 60);
+        const totalStudents = courses.reduce((sum, c) => sum + c.students, 0);
+        const totalCredits = courses.reduce((sum, c) => sum + c.credits, 0);
+        const highest = courses.reduce((a, b) => a.students > b.students ? a : b);
+        const lowest = courses.reduce((a, b) => a.students < b.students ? a : b);
+
+        // ============================================================
+        // 7. RENDER SCREEN 1: OVERVIEW
+        // ============================================================
+        document.getElementById('totalCourses').textContent = totalCourses;
+        document.getElementById('theoryCourses').textContent = theoryCourses.length;
+        document.getElementById('highestEnrollment').textContent = highest.students;
+        document.getElementById('lowestEnrollment').textContent = lowest.students;
+
+        document.getElementById('summaryText').innerHTML = `
+            The university offers <strong>${totalCourses} courses</strong> with a total enrollment of 
+            <strong>${totalStudents} students</strong>. 
+            <strong>${highest.name}</strong> has the highest enrollment with 
+            <strong>${highest.students} students</strong>. 
+            There are <strong>${theoryCourses.length} theory courses</strong>, 
+            <strong>${practicalCourses.length} practical course</strong>, and 
+            <strong>${fourCreditCourses.length} four-credit courses</strong>.
+            ${highEnrollment.length > 0 ? `Teaching assistants are required for: <strong>${highEnrollment.map(c => c.name).join(', ')}</strong>.` : ''}
+        `;
+
+        // ============================================================
+        // 8. RENDER SCREEN 2: COURSES TABLE
+        // ============================================================
+        const tableBody = document.getElementById('courseTableBody');
+
+        // Sort by students descending
+        const sortedCourses = [...courses].sort((a, b) => b.students - a.students);
+
+        sortedCourses.forEach(course => {
+            const isHigh = course.students > 60;
+            const badgeClass = course.type === 'Theory' ? 'badge-theory' : 'badge-practical';
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong>${course.code}</strong></td>
+                <td>${course.name}</td>
+                <td>${course.faculty}</td>
+                <td class="${isHigh ? 'high-enrollment' : ''}">${course.students}</td>
+                <td>${course.credits}</td>
+                <td><span class="badge ${badgeClass}">${course.type}</span></td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        // ============================================================
+        // 9. RENDER SCREEN 3: CHART
+        // ============================================================
+        const chartContainer = document.getElementById('chartContainer');
+        const maxStudents = sortedCourses[0].students;
+
+        sortedCourses.forEach(course => {
+            const percent = Math.round((course.students / maxStudents) * 100);
+
+            // Different color for theory vs practical
+            const color = course.type === 'Theory' 
+                ? 'linear-gradient(90deg, #1a4a7a, #4a8fd8)' 
+                : 'linear-gradient(90deg, #0d6e2d, #34a853)';
+
+            const row = document.createElement('div');
+            row.className = 'chart-row';
+            row.innerHTML = `
+                <div class="chart-label">
+                    <span>${course.name} <span class="code">(${course.code})</span></span>
+                    <span>${course.students} students</span>
+                </div>
+                <div class="chart-bar-bg">
+                    <div class="chart-bar-fill" style="width:${percent}%; background: ${color};">${course.students}</div>
+                </div>
+            `;
+            chartContainer.appendChild(row);
+        });
+
+        // ============================================================
+        // 10. RENDER SCREEN 4: FACULTY
+        // ============================================================
+        const facultyGrid = document.getElementById('facultyGrid');
+        const facultyMap = {};
+
+        courses.forEach(course => {
+            if (!facultyMap[course.faculty]) {
+                facultyMap[course.faculty] = [];
+            }
+            facultyMap[course.faculty].push(course);
+        });
+
+        Object.keys(facultyMap).forEach(name => {
+            const facultyCourses = facultyMap[name];
+            const total = facultyCourses.reduce((sum, c) => sum + c.students, 0);
+
+            const card = document.createElement('div');
+            card.className = 'faculty-card';
+
+            let itemsHTML = '';
+            facultyCourses.forEach(c => {
+                itemsHTML += `
+                    <div class="course-item">
+                        <span>${c.code} — ${c.name}</span>
+                        <span class="students">${c.students}</span>
+                    </div>
+                `;
+            });
+
+            card.innerHTML = `
+                <h3>${name}</h3>
+                ${itemsHTML}
+                <div class="total">Total Students: ${total}</div>
+            `;
+            facultyGrid.appendChild(card);
+        });
+
+        // ============================================================
+        // 11. RENDER SCREEN 5: CREDITS
+        // ============================================================
+        const fourCreditDiv = document.getElementById('fourCreditCourses');
+        const otherCreditDiv = document.getElementById('otherCreditCourses');
+
+        fourCreditCourses.forEach(course => {
+            fourCreditDiv.innerHTML += `
+                <div class="credit-item">
+                    <span class="name">${course.name}</span>
+                    <span class="value">4 Credits</span>
+                </div>
+            `;
+        });
+
+        courses.filter(c => c.credits !== 4).forEach(course => {
+            otherCreditDiv.innerHTML += `
+                <div class="credit-item">
+                    <span class="name">${course.name}</span>
+                    <span class="value">${course.credits} Credits</span>
+                </div>
+            `;
+        });
+
+        document.getElementById('totalCredits').textContent = totalCredits;
+
+        // ============================================================
+        // 12. RENDER SCREEN 6: ANALYSIS
+        // ============================================================
+        document.getElementById('highestCourse').textContent =
+            `${highest.name} — ${highest.students} students`;
+
+        document.getElementById('lowestCourse').textContent =
+            `${lowest.name} — ${lowest.students} students`;
+
+        document.getElementById('theoryResult').textContent =
+            `${theoryCourses.length} Theory courses, ${practicalCourses.length} Practical course`;
+
+        document.getElementById('fourCreditResult').textContent =
+            fourCreditCourses.map(c => c.name).join(', ');
+
+        document.getElementById('supportResult').innerHTML =
+            highEnrollment.length > 0 
+                ? highEnrollment.map(c => `<span class="highlight">${c.name}</span>`).join(', ') 
+                : 'None (all courses below 60 students)';
+
+        document.getElementById('totalStudents').textContent =
+            `${totalStudents} students`;
+
+        // ============================================================
+        // 13. NAVIGATION
+        // ============================================================
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const screens = {
+            overview: document.getElementById('overview'),
+            courses: document.getElementById('courses'),
+            chart: document.getElementById('chart'),
+            faculty: document.getElementById('faculty'),
+            credits: document.getElementById('credits'),
+            analysis: document.getElementById('analysis')
+        };
+
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                navButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                Object.values(screens).forEach(s => s.classList.remove('active'));
+
+                const target = this.dataset.screen;
+                if (screens[target]) {
+                    screens[target].classList.add('active');
+                }
+            });
+        });
+
+        // ============================================================
+        // 14. CONSOLE SUMMARY
+        // ============================================================
+        console.log('✅ Dashboard loaded successfully!');
+        console.log('📊 Data parsed using XML + XPath');
+        console.log(`📚 ${totalCourses} courses loaded`);
+        console.log('📋 Course list:');
+        courses.forEach((c, i) => {
+            console.log(`   ${i+1}. ${c.name} (${c.code}) - ${c.students} students - ${c.credits} credits - ${c.type}`);
+        });
+        console.log(`🏆 Highest: ${highest.name} (${highest.students})`);
+        console.log(`📉 Lowest: ${lowest.name} (${lowest.students})`);
+    </script>
+
+</body>
+</html>
