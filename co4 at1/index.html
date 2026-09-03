@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit IV - XML & XPath Assessment (CO4-AT1)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="badge-tag">UNIT IV - REPRESENTING WEB DATA</div>
+            <h1>Assessment I: Data Interpretation</h1>
+            <p class="subtitle">Scenario: University Course Enrollment Analysis | Duration: 60 Mins | Max Marks: 30</p>
+            
+            <nav class="nav-tabs" id="navTabs">
+                <button class="tab-btn active" data-tab="overview">Overview & XML</button>
+                <button class="tab-btn" data-tab="q1">Q1: XML Structure (5M)</button>
+                <button class="tab-btn" data-tab="q2">Q2: XPath Expressions (10M)</button>
+                <button class="tab-btn" data-tab="q3">Q3: XSLT Transform (10M)</button>
+                <button class="tab-btn" data-tab="q4">Q4: Data Interpretation (5M)</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <!-- Tab 0: Overview & XML Dataset -->
+        <section id="tab-overview" class="tab-content active">
+            <div class="card-grid">
+                <div class="card glass-card span-2">
+                    <div class="card-header">
+                        <h2>Given XML Dataset (<code>courses.xml</code>)</h2>
+                        <span class="pill-badge">Well-Formed XML 1.0</span>
+                    </div>
+                    <div class="code-container">
+                        <pre><code id="xmlDisplay"></code></pre>
+                    </div>
+                </div>
+
+                <div class="card glass-card">
+                    <div class="card-header">
+                        <h2>Assessment Summary</h2>
+                    </div>
+                    <div class="summary-list">
+                        <div class="summary-item">
+                            <span class="label">Course Units</span>
+                            <span class="value">Unit IV - Representing Web Data</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Total Courses</span>
+                            <span class="value" id="statTotalCourses">5</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Total Students</span>
+                            <span class="value">272</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Theory vs Practical</span>
+                            <span class="value">4 Theory / 1 Practical</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Max Marks</span>
+                            <span class="value highlight">30 Marks</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 1: Question 1 -->
+        <section id="tab-q1" class="tab-content">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h2>Question 1: Interpret the XML Structure <span class="marks-tag">5 Marks</span></h2>
+                </div>
+                <div class="qa-grid">
+                    <div class="qa-item">
+                        <div class="q-title"><strong>a.</strong> Identify the root element.</div>
+                        <div class="a-box">
+                            <span class="badge badge-accent">&lt;courses&gt;</span>
+                            <p>The root element is <code>&lt;courses&gt;</code>, which wraps all individual <code>&lt;course&gt;</code> elements.</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-item">
+                        <div class="q-title"><strong>b.</strong> Identify the repeating record element.</div>
+                        <div class="a-box">
+                            <span class="badge badge-accent">&lt;course&gt;</span>
+                            <p>The repeating element is <code>&lt;course&gt;</code>, each representing an individual academic course entity.</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-item">
+                        <div class="q-title"><strong>c.</strong> Identify the attribute used to uniquely identify each course.</div>
+                        <div class="a-box">
+                            <span class="badge badge-accent">id</span>
+                            <p>The <code>id</code> attribute (e.g., <code>id="C101"</code>, <code>id="C102"</code>, etc.) on the <code>&lt;course&gt;</code> element.</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-item">
+                        <div class="q-title"><strong>d.</strong> Identify the elements that represent numeric information.</div>
+                        <div class="a-box">
+                            <div class="tag-row">
+                                <span class="badge badge-accent">&lt;students&gt;</span>
+                                <span class="badge badge-accent">&lt;credits&gt;</span>
+                            </div>
+                            <p><code>&lt;students&gt;</code> represents enrolled headcount and <code>&lt;credits&gt;</code> represents course credit weightage.</p>
+                        </div>
+                    </div>
+
+                    <div class="qa-item full-width">
+                        <div class="q-title"><strong>e.</strong> State whether the XML document is structurally well-formed and justify your answer.</div>
+                        <div class="a-box success-box">
+                            <div class="status-heading"><strong>Decision: YES, the XML document is structurally well-formed.</strong></div>
+                            <ul class="reason-list">
+                                <li><strong>Valid Declaration:</strong> Begins with standard XML declaration <code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</code>.</li>
+                                <li><strong>Single Root Element:</strong> Enclosed entirely within a single enclosing root tag <code>&lt;courses&gt;</code>.</li>
+                                <li><strong>Proper Nesting & Closure:</strong> All elements are correctly nested and closed (no mismatched or overlapping tags).</li>
+                                <li><strong>Valid Attributes:</strong> Attribute values are enclosed in quotes (e.g., <code>id="C101"</code>).</li>
+                                <li><strong>Case Consistency:</strong> Tag names strictly follow consistent case sensitivity.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 2: Question 2 -->
+        <section id="tab-q2" class="tab-content">
+            <div class="card glass-card">
+                <div class="card-header flex-between">
+                    <h2>Question 2: Apply XPath for Data Selection <span class="marks-tag">10 Marks</span></h2>
+                    <span class="live-pill">Live Interactive XPath Engine</span>
+                </div>
+
+                <div class="xpath-interactive-bar">
+                    <label for="xpathInput"><strong>Test XPath Query:</strong></label>
+                    <div class="input-group">
+                        <input type="text" id="xpathInput" placeholder="Enter XPath e.g. /courses/course[students > 50]" value="/courses/course[students > 50]">
+                        <button id="runXPathBtn" class="btn btn-primary">Execute</button>
+                    </div>
+                </div>
+
+                <div class="xpath-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th width="60">Part</th>
+                                <th>Requirement</th>
+                                <th>XPath Expression</th>
+                                <th width="100">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="xpathQuestionsTable">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Result Box -->
+                <div class="xpath-result-panel">
+                    <div class="panel-header">
+                        <h3>Query Execution Result</h3>
+                        <span id="matchCountBadge" class="badge badge-info">0 Matches</span>
+                    </div>
+                    <div id="xpathResultsContent" class="results-viewer">
+                        <em>Click "Try" on any query above or type a custom XPath expression to evaluate against courses.xml</em>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 3: Question 3 -->
+        <section id="tab-q3" class="tab-content">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h2>Question 3: Apply XSLT for Data Presentation <span class="marks-tag">10 Marks</span></h2>
+                </div>
+
+                <div class="req-chips">
+                    <span class="chip">Filter: students &gt; 40</span>
+                    <span class="chip">Sort: students descending</span>
+                    <span class="chip">Header: "High Enrollment Courses"</span>
+                    <span class="chip">Valid HTML Table</span>
+                </div>
+
+                <div class="split-view">
+                    <div class="split-pane">
+                        <h3>XSLT Stylesheet (<code>transform.xsl</code>)</h3>
+                        <div class="code-container">
+                            <pre><code id="xsltDisplay"></code></pre>
+                        </div>
+                    </div>
+                    <div class="split-pane">
+                        <h3>Live Rendered Output (Client-Side XSLT Transformation)</h3>
+                        <div id="xsltOutputContainer" class="rendered-preview"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 4: Question 4 -->
+        <section id="tab-q4" class="tab-content">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h2>Question 4: Interpret the Extracted Data <span class="marks-tag">5 Marks</span></h2>
+                </div>
+
+                <div class="interp-grid">
+                    <div class="interp-card card-accent">
+                        <div class="interp-icon">🏆</div>
+                        <div class="interp-title">a. Highest Enrollment</div>
+                        <div class="interp-val">Artificial Intelligence (AI302)</div>
+                        <div class="interp-sub"><strong>72 Students</strong> &bull; Faculty: Dr. Meena &bull; ID: C102</div>
+                    </div>
+
+                    <div class="interp-card">
+                        <div class="interp-icon">📉</div>
+                        <div class="interp-title">b. Lowest Enrollment</div>
+                        <div class="interp-val">Web Technology Laboratory (WEB303)</div>
+                        <div class="interp-sub"><strong>36 Students</strong> &bull; Faculty: Dr. Ravi &bull; ID: C103</div>
+                    </div>
+
+                    <div class="interp-card">
+                        <div class="interp-icon">📚</div>
+                        <div class="interp-title">c. Number of Theory Courses</div>
+                        <div class="interp-val">4 Courses</div>
+                        <div class="interp-sub">WEB301, AI302, ML304, DB305 (All except practical WEB303)</div>
+                    </div>
+
+                    <div class="interp-card">
+                        <div class="interp-icon">⭐</div>
+                        <div class="interp-title">d. Courses with Exactly 4 Credits</div>
+                        <div class="interp-val">3 Courses</div>
+                        <div class="interp-sub">WEB301 (4 Cr), AI302 (4 Cr), ML304 (4 Cr)</div>
+                    </div>
+
+                    <div class="interp-card alert-card full-span">
+                        <div class="interp-icon">👥</div>
+                        <div class="interp-title">e. Additional Teaching Assistant Requirement (Students &gt; 60)</div>
+                        <div class="interp-val">2 Courses Require Additional TA Support:</div>
+                        <div class="ta-course-list">
+                            <div class="ta-item">
+                                <span class="badge badge-danger">72 Students</span>
+                                <strong>AI302 - Artificial Intelligence</strong> (Faculty: Dr. Meena)
+                            </div>
+                            <div class="ta-item">
+                                <span class="badge badge-danger">64 Students</span>
+                                <strong>ML304 - Machine Learning</strong> (Faculty: Dr. Priya)
+                            </div>
+                        </div>
+                        <div class="note-text">
+                            <em>* Note: WEB301 (58), DB305 (42), and WEB303 (36) have &le; 60 students and do not require additional TA assistance.</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>Web Technology | Unit IV Assessment Solutions | Academic Year 2026</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
